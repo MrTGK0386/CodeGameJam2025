@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,7 +12,7 @@ public class ItemPlacementRule
     public GameObject prefab;
     [Range(0, 1)]
     [SerializeField]
-    public float spawnRate; // 0-1
+    public float spawnRate;
     public int maxPerRoom;
     public float minDistanceFromWalls;
     public float minDistanceFromOtherItems;
@@ -28,19 +29,71 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private int offset = 1;
     [SerializeField]
     private bool randomWalkRooms = false;
-    [SerializeField] 
+    [SerializeField]
     private List<ItemPlacementRule> itemRules = new List<ItemPlacementRule>();
+    [SerializeField]
+    private GameObject spawnRoomPrefab;
+    [SerializeField] 
+    private Vector2Int spawnRoomSize = new Vector2Int(8, 8);
 
     private HashSet<Vector2Int> corridors;
     private List<BoundsInt> roomsList;
     private Dictionary<Vector2Int, GameObject> placedItems = new Dictionary<Vector2Int, GameObject>();
     protected HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
+    private BoundsInt spawnRoom;
 
     protected override void RunProceduralGeneration()
     {
+        floor.Clear();
+        corridors = new HashSet<Vector2Int>();
+        roomsList = new List<BoundsInt>();
         ClearItems();
+        tilemapVisualizer.Clear();
+        
+        CreateSpawnRoom();
         CreateRooms();
+        ConnectSpawnRoom();
         PlaceItems();
+    }
+
+    private void CreateSpawnRoom()
+    {
+        // Clear old spawn room
+        GameObject spawnContainer = GameObject.Find("Grid/SpawnRoom");
+        if (spawnContainer != null)
+        {
+            Destroy(spawnContainer);
+        }
+
+        Vector2Int spawnPosition = new Vector2Int(
+            dungeonWidth / 2 - spawnRoomSize.x / 2,
+            dungeonHeight / 2 - spawnRoomSize.y / 2
+        );
+        
+        spawnRoom = new BoundsInt(
+            new Vector3Int(spawnPosition.x, spawnPosition.y, 0),
+            new Vector3Int(spawnRoomSize.x, spawnRoomSize.y, 0)
+        );
+
+        for (int col = offset; col < spawnRoom.size.x - offset; col++)
+        {
+            for (int row = offset; row < spawnRoom.size.y - offset; row++)
+            {
+                Vector2Int position = (Vector2Int)spawnRoom.min + new Vector2Int(col, row);
+                floor.Add(position);
+            }
+        }
+
+        if (spawnRoomPrefab != null)
+        {
+            // Create SpawnRoom container under Grid
+            GameObject spawnRoomContainer = new GameObject("SpawnRoom");
+            spawnRoomContainer.transform.parent = GameObject.Find("Grid").transform;
+
+            Vector3 worldPosition = new Vector3(spawnPosition.x + spawnRoomSize.x/2, spawnPosition.y + spawnRoomSize.y/2, 0);
+            GameObject spawnRoom = Instantiate(spawnRoomPrefab, worldPosition, Quaternion.identity);
+            spawnRoom.transform.parent = spawnRoomContainer.transform;
+        }
     }
 
     private void ClearItems()
@@ -64,22 +117,48 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     protected virtual void CreateRooms()
     {
-        var roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(
-            new BoundsInt((Vector3Int)startPosition, 
-            new Vector3Int(dungeonWidth, dungeonHeight, 0)), 
-            minRoomWidth, 
-            minRoomHeight);
+        var availableSpace = new BoundsInt(
+            new Vector3Int(0, 0, 0),
+            new Vector3Int(dungeonWidth, dungeonHeight, 0)
+        );
 
-        HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
+        roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(
+            availableSpace,
+            minRoomWidth,
+            minRoomHeight
+        );
+
+        roomsList.RemoveAll(room => 
+            room.min.x < spawnRoom.max.x &&
+            room.max.x > spawnRoom.min.x &&
+            room.min.y < spawnRoom.max.y &&
+            room.max.y > spawnRoom.min.y
+        );
 
         if (randomWalkRooms)
         {
-            floor = CreateRoomsRandomly(roomsList);
+            var roomFloor = CreateRoomsRandomly(roomsList);
+            floor.UnionWith(roomFloor);
         }
         else
         {
-            floor = CreateSimpleRooms(roomsList);
+            var roomFloor = CreateSimpleRooms(roomsList);
+            floor.UnionWith(roomFloor);
         }
+
+        HashSet<Vector2Int> corridors = ConnectRooms(roomsList.Select(r => 
+            (Vector2Int)Vector3Int.RoundToInt(r.center)).ToList());
+        
+        this.corridors = corridors;
+        floor.UnionWith(corridors);
+    }
+
+    private void ConnectSpawnRoom()
+    {
+        Vector2Int spawnCenter = new Vector2Int(
+            Mathf.RoundToInt(spawnRoom.center.x),
+            Mathf.RoundToInt(spawnRoom.center.y)
+        );
 
         List<Vector2Int> roomCenters = new List<Vector2Int>();
         foreach (var room in roomsList)
@@ -87,12 +166,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
             roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
 
-        HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
-        floor.UnionWith(corridors);
-
-        this.roomsList = roomsList;
-        this.corridors = corridors;
-        this.floor = floor;
+        Vector2Int closest = FindClosestPointTo(spawnCenter, roomCenters);
+        HashSet<Vector2Int> spawnCorridor = CreateCorridor(spawnCenter, closest);
+        corridors.UnionWith(spawnCorridor);
+        floor.UnionWith(spawnCorridor);
 
         tilemapVisualizer.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
