@@ -8,6 +8,7 @@ public class RandomColors : MonoBehaviour
     // Start is called before the first frame update
     
     public Color[] colors;
+    private Color currentColor;
     void Start()
     {
         PopulateColorArray();
@@ -18,9 +19,7 @@ public class RandomColors : MonoBehaviour
     {
         int rand = Random.Range(0, colors.Length);
         Color newColor = colors[rand];
-        
-        
-        Debug.Log(newColor.ToString());
+        currentColor = newColor;
         
         ApplyMaterial(newColor, 0);
     }
