@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletEnemy : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float bulletDamage = 10f;
@@ -38,21 +38,20 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
                 
-            case "Enemy":
-                Debug.Log("Collision avec un ennemi !");
-                EnemyController enemyController = other.GetComponent<EnemyController>();
-                if (enemyController != null)
+            case "Player":
+                Debug.Log("Collision avec un player !");
+                PlayerStats player = other.GetComponent<PlayerStats>();
+                if (player != null)
                 {
-                    enemyController.TakeDamage(bulletDamage);
-                    Debug.Log($"Dégâts infligés à l'ennemi : {bulletDamage}");
+                    player.TakeDamage(bulletDamage);
+                    Debug.Log($"Dégâts infligés au player : {bulletDamage}");
                 }
                 Impact();
                 break;
-                
-            default :
-                Destroy(gameObject);
-                break;
-            
+
+            // default :
+            //     Impact();
+            //     break;
         }
     }
 

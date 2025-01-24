@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-
-    public Camera sceneCamera;
     public Rigidbody2D rb;
     private Vector2 mousePosition;
     public GameObject bullet;
@@ -36,7 +34,7 @@ public class PlayerShoot : MonoBehaviour
         if(Input.GetMouseButtonDown(0)){
             Fire();
         }
-        mousePosition = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void Aim()
