@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6299529946016478419}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,9 +100,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  maxHealth: 50
   moveSpeed: 3
   detectionRange: 10
   stoppingDistance: 1
+  damageAmount: 10
+  damageInterval: 1
   rotateTowardsPlayer: 1
   rotationSpeed: 5
 --- !u!50 &371492258331018071

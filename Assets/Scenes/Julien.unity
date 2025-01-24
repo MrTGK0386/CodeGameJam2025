@@ -122,7 +122,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &528558424
+--- !u!1001 &92694528
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -132,11 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2101799547678690269, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.24
+      value: 3.1
       objectReference: {fileID: 0}
     - target: {fileID: 2101799547678690269, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.441
+      value: 3.63
       objectReference: {fileID: 0}
     - target: {fileID: 2101799547678690269, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -170,24 +170,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5296233881019990953, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1508989953}
-    - target: {fileID: 5296233881019990953, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
-      propertyPath: detectionRange
-      value: 3.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 6299529946016478419, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9096351744454061958, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
       propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096351744454061958, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
-      propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -238,11 +222,12 @@ GameObject:
   - component: {fileID: 1508989952}
   - component: {fileID: 1508989956}
   - component: {fileID: 1508989954}
+  - component: {fileID: 1508989957}
   - component: {fileID: 1508989951}
   - component: {fileID: 1508989955}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,7 +374,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -422,6 +407,27 @@ MonoBehaviour:
   bullet: {fileID: 8448018543548000343, guid: 0ba6324d8e9e75b4e8c745887a7acb14, type: 3}
   firePoint: {fileID: 814780579}
   fireForce: 20
+--- !u!114 &1508989957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508989950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2c54a1c53865a439bca60a4c2a107e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 20
+  explosionPrefab: {fileID: 6781736852663111901, guid: fc928bb2ad1ee8544a116beb23526528, type: 3}
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1847024023
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,4 +571,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1847024026}
   - {fileID: 1508989953}
-  - {fileID: 528558424}
+  - {fileID: 92694528}
