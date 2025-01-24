@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     bool isDashing = false;
     bool canDash;
 
+    // Ajoutez les autres variables de script
+    private PlayerStats stats;
+
+
     // Update is called once per frame
     void Update()
     {
@@ -78,4 +82,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     } 
+
 }

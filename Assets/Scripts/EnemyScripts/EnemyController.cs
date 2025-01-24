@@ -3,13 +3,25 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Références et variables de configuration
-    public Transform target;           // Assigne la cible à la main
-    private Rigidbody2D rb;            // Le Rigidbody2D de l'ennemi
+    [Header("References")]
+    public Transform target;
+    private Rigidbody2D rb;
+    private PlayerStats playerStats;         // Référence aux stats du joueur
+
+    [Header("Health Settings")]
+    public float maxHealth = 50f;
+    private float currentHealth;
 
     [Header("Movement Settings")]
     public float moveSpeed = 3f;        // Vitesse de déplacement
     public float detectionRange = 10f;  // Distance de détection du joueur
     public float stoppingDistance = 1f; // Distance minimale avant d'arrêter de suivre
+
+    [Header("Combat Settings")]
+    public float damageAmount = 10f;        // Quantité de dégâts infligés
+    public float damageInterval = 1f;       // Temps entre chaque dégât (en secondes)
+    private float lastDamageTime;           // Pour suivre le moment du dernier dégât
+
 
     [Header("Optional Settings")]
     public bool rotateTowardsPlayer = true;  // Si l'ennemi doit se tourner vers le joueur
@@ -18,6 +30,10 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // On ajoute l'initialisation de lastDamageTime
+        lastDamageTime = Time.time;
+        currentHealth = maxHealth;
 
         // Si target n'est pas assigné, on essaie de le trouver automatiquement
         if (target == null)
@@ -55,6 +71,22 @@ public class EnemyController : MonoBehaviour
         {
             Debug.LogError("No Rigidbody2D found on enemy!");
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Enemy health: {currentHealth}/{maxHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        // Ajoutez ici votre logique de mort (explosion, etc.)
+        Destroy(gameObject);
     }
 
     void FixedUpdate()
@@ -104,13 +136,29 @@ public class EnemyController : MonoBehaviour
     // Fonction pour détecter les collisions avec le trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Vérifions si c'est bien le player qui est entré dans notre trigger
-        if (other.CompareTag("Player"))
+        // On vérifie si c'est le player et si assez de temps s'est écoulé depuis le dernier dégât
+        if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageInterval)
         {
-            Debug.Log("Dégâts subis");
-            
-            // Plus tard, nous appellerons ici la fonction pour infliger des dégâts
-            // Par exemple : other.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
+            // On récupère les stats du joueur si on ne les a pas encore
+            if (playerStats == null)
+            {
+                playerStats = other.GetComponent<PlayerStats>();
+            }
+
+            if (playerStats != null)
+            {
+                // On inflige les dégâts
+                playerStats.TakeDamage(damageAmount);
+                
+                // On met à jour le moment du dernier dégât
+                lastDamageTime = Time.time;
+                
+                Debug.Log($"Dégâts infligés : {damageAmount}");
+            }
+            else
+            {
+                Debug.LogError("PlayerStats component not found on Player!");
+            }
         }
     }
 
