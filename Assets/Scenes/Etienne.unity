@@ -674,6 +674,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ceaddb2a06b0742a91fa1c325ce203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colors:
+  - {r: 0.96981126, g: 0.065965846, b: 0.012808777, a: 0}
+  - {r: 0.25378466, g: 0.87169814, b: 0.14309002, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &1308789275
 SpriteRenderer:
   m_ObjectHideFlags: 0
