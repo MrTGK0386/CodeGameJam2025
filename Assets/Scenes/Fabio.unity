@@ -233,8 +233,9 @@ GameObject:
   - component: {fileID: 121869342}
   - component: {fileID: 121869341}
   - component: {fileID: 121869340}
-  - component: {fileID: 121869339}
   - component: {fileID: 121869343}
+  - component: {fileID: 121869339}
+  - component: {fileID: 121869344}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -399,6 +400,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.25, y: 2.25}
   m_EdgeRadius: 0
+--- !u!114 &121869344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121869338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2c54a1c53865a439bca60a4c2a107e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 20
+  explosionPrefab: {fileID: 6781736852663111901, guid: fc928bb2ad1ee8544a116beb23526528, type: 3}
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &874649741
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +592,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5296233881019990953, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 121869342}
     - target: {fileID: 5296233881019990953, guid: 5c96751d0236a1c43a1798649d30374c, type: 3}
       propertyPath: moveSpeed
       value: 5

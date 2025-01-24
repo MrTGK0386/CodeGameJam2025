@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public Vector2 moveDirection;
     private Vector2 mousePosition;
 
+    // Ajoutez les autres variables de script
+    private PlayerStats stats;
+
+
     // Update is called once per frame
     void Update()
     {
@@ -51,5 +55,5 @@ public class PlayerController : MonoBehaviour
 
     }
     
-    
+
 }
