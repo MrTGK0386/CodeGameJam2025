@@ -9,20 +9,22 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public Rigidbody2D rb;
 
-    // DASH
-    private bool canDash = true;
-    private bool isDashing = false;
-    public float dashPower;
-    public float dashTime;
-    public float dashCd;
-
     // MOVES
     private Vector2 moveDirection;
+
+    [Header("Dash Settings")]
+    [SerializeField] float dashSpeed = 10f;
+    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashCooldown = 1f;
+    bool isDashing = false;
+    bool canDash;
 
     // Update is called once per frame
     void Update()
     {
-        if(isDashing){
+        // Physics Calculation
+        if(isDashing)
+        {
             return;
         }
 
@@ -34,6 +36,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
+        if(isDashing)
+        {
+            return;
+        }
+
         // Physics Calculation
         Move();
     }
@@ -44,10 +51,9 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector2(moveX, moveY).normalized;
 
-        // dash
-        if (Input.GetButton("Jump") && canDash)
+        if(Input.GetKeyDown(KeyCode.Space) && canDash)
         {
-            
+            Debug.Log("here");
             StartCoroutine(Dash());
         }
     }
@@ -56,28 +62,15 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed); 
     }
-
+    
     private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
-
-        // Rapid, short burst of speed
-        float originalSpeed = moveSpeed;
-        moveSpeed *= dashPower; // Temporary speed boost
-
-        // Short duration of accelerated movement
-        yield return new WaitForSeconds(dashTime);
-
-        // Restore original speed
-        moveSpeed = originalSpeed;
-
-        // Cooldown
-        yield return new WaitForSeconds(dashCd);
-
+        rb.velocity = new Vector2(moveDirection.x * dashSpeed, moveDirection.y * dashSpeed);
+        yield return new WaitForSeconds(dashDuration);
         isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
         canDash = true;
-}
-    
-    
+    } 
 }

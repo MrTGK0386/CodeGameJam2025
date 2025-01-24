@@ -357,9 +357,6 @@ MonoBehaviour:
   sceneCamera: {fileID: 1847024025}
   moveSpeed: 10
   rb: {fileID: 1508989951}
-  dashPower: 2
-  dashTime: 0.5
-  dashCd: 1
 --- !u!61 &1508989955
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -389,7 +386,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
