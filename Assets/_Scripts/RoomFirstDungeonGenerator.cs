@@ -13,9 +13,14 @@ public class ItemPlacementRule
     [Range(0, 1)]
     [SerializeField]
     public float spawnRate;
-    public int maxPerRoom;
-    public float minDistanceFromWalls;
-    public float minDistanceFromOtherItems;
+    [Tooltip("-1 pour illimité")]
+    public int maxPerRoom = -1;
+    [Tooltip("-1 pour illimité")]
+    public int maxPerMap = -1;
+    [Tooltip("-1 pour illimité")]
+    public float minDistanceFromWalls = -1;
+    [Tooltip("-1 pour illimité")]
+    public float minDistanceFromOtherItems = -1;
 }
 
 public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
@@ -42,19 +47,11 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     protected HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
     private BoundsInt spawnRoom;
 
-    protected override void RunProceduralGeneration()
+    public void RegenerateDungeon()
     {
-        floor.Clear();
-        corridors = new HashSet<Vector2Int>();
-        roomsList = new List<BoundsInt>();
-        ClearItems();
-        tilemapVisualizer.Clear();
-        
-        CreateSpawnRoom();
-        CreateRooms();
-        ConnectSpawnRoom();
-        PlaceItems();
+        RunProceduralGeneration();
     }
+
 
     private void CreateSpawnRoom()
     {
@@ -177,15 +174,26 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     private void PlaceItems()
     {
+        Dictionary<ItemPlacementRule, int> totalItemsPlaced = new Dictionary<ItemPlacementRule, int>();
+        
+        foreach (var rule in itemRules)
+        {
+            totalItemsPlaced[rule] = 0;
+        }
+
         foreach (var room in roomsList)
         {
             foreach (var rule in itemRules)
             {
-                int itemsPlaced = 0;
+                if (rule.maxPerMap != -1 && totalItemsPlaced[rule] >= rule.maxPerMap) continue;
+                
+                int itemsPlacedInRoom = 0;
                 int attempts = 0;
                 int maxAttempts = 50;
 
-                while (itemsPlaced < rule.maxPerRoom && attempts < maxAttempts)
+                while ((rule.maxPerRoom == -1 || itemsPlacedInRoom < rule.maxPerRoom) && 
+                       (rule.maxPerMap == -1 || totalItemsPlaced[rule] < rule.maxPerMap) && 
+                       attempts < maxAttempts)
                 {
                     attempts++;
                     if (Random.value > rule.spawnRate) continue;
@@ -194,7 +202,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
                     if (IsValidItemPosition(position, rule))
                     {
                         PlaceItem(position, rule);
-                        itemsPlaced++;
+                        itemsPlacedInRoom++;
+                        totalItemsPlaced[rule]++;
                     }
                 }
             }
@@ -212,16 +221,22 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     {
         if (!floor.Contains(position)) return false;
 
-        foreach (var wallPos in GetNearbyWalls(position, Mathf.CeilToInt(rule.minDistanceFromWalls)))
+        if (rule.minDistanceFromWalls != -1)
         {
-            if (Vector2.Distance(position, wallPos) < rule.minDistanceFromWalls)
-                return false;
+            foreach (var wallPos in GetNearbyWalls(position, Mathf.CeilToInt(rule.minDistanceFromWalls)))
+            {
+                if (Vector2.Distance(position, wallPos) < rule.minDistanceFromWalls)
+                    return false;
+            }
         }
 
-        foreach (var item in placedItems)
+        if (rule.minDistanceFromOtherItems != -1)
         {
-            if (Vector2.Distance(position, item.Key) < rule.minDistanceFromOtherItems)
-                return false;
+            foreach (var item in placedItems)
+            {
+                if (Vector2.Distance(position, item.Key) < rule.minDistanceFromOtherItems)
+                    return false;
+            }
         }
 
         return true;
@@ -251,7 +266,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
             propsContainer.transform.parent = GameObject.Find("Grid").transform;
         }
 
-        Vector3 worldPosition = new Vector3(position.x, position.y, 0);
+        Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
         GameObject item = Instantiate(rule.prefab, worldPosition, Quaternion.identity);
         item.transform.parent = propsContainer.transform;
         placedItems.Add(position, item);
@@ -363,6 +378,17 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         return floor;
     }
 
-    protected virtual HashSet<Vector2Int> GetCorridors() => corridors;
-    protected virtual List<BoundsInt> GetRooms() => roomsList;
+        protected override void RunProceduralGeneration()
+    {
+        floor.Clear();
+        corridors = new HashSet<Vector2Int>();
+        roomsList = new List<BoundsInt>();
+        ClearItems();
+        tilemapVisualizer.Clear();
+        
+        CreateSpawnRoom();
+        CreateRooms();
+        ConnectSpawnRoom();
+        PlaceItems();
+    }
 }
