@@ -8,6 +8,10 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerStats playerStats;         // Référence aux stats du joueur
 
+    [Header("Health Settings")]
+    public float maxHealth = 50f;
+    private float currentHealth;
+
     [Header("Movement Settings")]
     public float moveSpeed = 3f;        // Vitesse de déplacement
     public float detectionRange = 10f;  // Distance de détection du joueur
@@ -29,6 +33,7 @@ public class EnemyController : MonoBehaviour
 
         // On ajoute l'initialisation de lastDamageTime
         lastDamageTime = Time.time;
+        currentHealth = maxHealth;
 
         // Si target n'est pas assigné, on essaie de le trouver automatiquement
         if (target == null)
@@ -66,6 +71,22 @@ public class EnemyController : MonoBehaviour
         {
             Debug.LogError("No Rigidbody2D found on enemy!");
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Enemy health: {currentHealth}/{maxHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        // Ajoutez ici votre logique de mort (explosion, etc.)
+        Destroy(gameObject);
     }
 
     void FixedUpdate()
