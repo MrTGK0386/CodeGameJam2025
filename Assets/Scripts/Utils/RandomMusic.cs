@@ -37,16 +37,23 @@ public class RandomMusic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (mySounds.Length > 0)
-            {
-                activeSound = mySounds[Random.Range(0, mySounds.Length)];
-                audioSource.PlayOneShot(activeSound);
-                Debug.Log($"Joue le son : {activeSound.name}");
-            }
-            else
-            {
-                Debug.LogWarning("Le tableau mySounds est vide. Chargez des fichiers audio.");
-            }
+           PlayRandomSound();
         }
     }
+
+    public void PlayRandomSound()
+    {
+        if (mySounds.Length > 0)
+        {
+            audioSource.Stop();
+            activeSound = mySounds[Random.Range(0, mySounds.Length)];
+            audioSource.PlayOneShot(activeSound);
+            Debug.Log($"Joue le son : {activeSound.name}");
+        }
+        else
+        {
+            Debug.LogWarning("Le tableau mySounds est vide. Chargez des fichiers audio.");
+        }
+    }
+    
 }
