@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
 using System.Collections;
 using System.Collections.Generic;
-=======
->>>>>>> Stashed changes
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -11,21 +8,6 @@ public class Bullet : MonoBehaviour
     public float bulletDamage = 10f;
     public float bulletLifetime = 3f;  // Durée de vie de la balle en secondes
 
-<<<<<<< Updated upstream
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
-=======
     void Start()
     {
         // Si aucun Rigidbody2D n'est assigné dans l'inspecteur, on en cherche un automatiquement
@@ -74,4 +56,3 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 }
->>>>>>> Stashed changes
