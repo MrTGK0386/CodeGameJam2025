@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour
         ProcessInputs();
     }
 
+    private void Start()
+    {
+        canDash = true;
+    }
+
     /// <summary>
     /// Update every fixed frame
     /// </summary>
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector2(moveX, moveY).normalized;
 
-        if(Input.GetKeyDown(KeyCode.Space) && canDash)
+        if(Input.GetButtonDown("Jump") && canDash)
         {
             Debug.Log("here");
             StartCoroutine(Dash());

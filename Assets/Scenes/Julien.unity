@@ -236,10 +236,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1508989953}
   - component: {fileID: 1508989952}
-  - component: {fileID: 1508989951}
-  - component: {fileID: 1508989954}
-  - component: {fileID: 1508989955}
   - component: {fileID: 1508989956}
+  - component: {fileID: 1508989954}
+  - component: {fileID: 1508989951}
+  - component: {fileID: 1508989955}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -357,6 +357,9 @@ MonoBehaviour:
   sceneCamera: {fileID: 1847024025}
   moveSpeed: 10
   rb: {fileID: 1508989951}
+  dashSpeed: 35
+  dashDuration: 0.25
+  dashCooldown: 1
 --- !u!61 &1508989955
 BoxCollider2D:
   m_ObjectHideFlags: 0
