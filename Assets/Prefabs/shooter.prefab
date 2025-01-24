@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1423998524787234242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8934911493592735953}
+  m_Layer: 7
+  m_Name: firePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8934911493592735953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423998524787234242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2101799547678690269}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9096351744454061958
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,8 +44,9 @@ GameObject:
   - component: {fileID: 5296233881019990953}
   - component: {fileID: 371492258331018071}
   - component: {fileID: 6299529946016478419}
-  m_Layer: 6
-  m_Name: Enemy
+  - component: {fileID: 612867096356410028}
+  m_Layer: 7
+  m_Name: shooter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +64,8 @@ Transform:
   m_LocalPosition: {x: 3.1, y: 3.63, z: 0}
   m_LocalScale: {x: 0.081626356, y: 0.081626356, z: 0.081626356}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8934911493592735953}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2237719360612526559
@@ -73,8 +106,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1565448347
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ffd5193134b469948b9a5f556cf8dc4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e23c47455d5494db025b2218f9497f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 4210428039898693379, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
   maxHealth: 50
   moveSpeed: 3
   detectionRange: 10
@@ -178,5 +211,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10.24, y: 10.24}
+  m_Size: {x: 0.08, y: 0.08}
   m_EdgeRadius: 0
+--- !u!114 &612867096356410028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096351744454061958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4824210d8ce0834186a19fd22967d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 10
+  fireRate: 0.5
+  bullet: {fileID: 8448018543548000343, guid: 744efd8e7c3857249a34deb31a71c492, type: 3}
+  firePoint: {fileID: 8934911493592735953}
