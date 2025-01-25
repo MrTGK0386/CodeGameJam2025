@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public Animator animator; 
     // Références et variables de configuration
     [Header("References")]
     public Transform target;
@@ -104,6 +105,8 @@ public class EnemyController : MonoBehaviour
             Vector2 direction = (target.position - transform.position).normalized;
 
             // Déplacement vers le joueur
+            animator.SetFloat("Speed", moveSpeed);
+
             rb.velocity = direction * moveSpeed;
 
             // Rotation vers le joueur si activée
