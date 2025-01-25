@@ -18,11 +18,14 @@ public class HUDManager : MonoBehaviour
     private PlayerStats playerStats;
     public GameObject pauseMenu;
     public static bool isPaused;
+    public TextMeshProUGUI floorText;
+    private GameManager gameManager;
 
     void Start()
     {
         // Cherche le composant PlayerStats dans la scène
         playerStats = FindObjectOfType<PlayerStats>();
+        gameManager = FindObjectOfType<GameManager>();
 
         if (playerStats == null)
         {
@@ -48,6 +51,12 @@ public class HUDManager : MonoBehaviour
 
     void Update()
     {
+        // Mise à jour du texte de l'étage
+        if (floorText != null && gameManager != null)
+        {
+            floorText.text = $"ETAGE {gameManager.GetFloor()}";
+        }
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)

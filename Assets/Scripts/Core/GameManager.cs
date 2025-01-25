@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public float scaler = 1.5f;
     
     private float difficulty = 1.0f;
-    private int compteurEtage = 0;
+    private static int  compteurEtage = 0;
     private bool isBoss = false;
     
     private void Awake()
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
             player = GameObject.FindWithTag("Player");
             musicManager = FindObjectOfType<RandomMusic>();
             discObject = FindObjectOfType<RandomColors>();
@@ -96,6 +97,11 @@ public class GameManager : MonoBehaviour
     public float GetMultiplier()
     {
         return difficulty;
+    }
+
+    public float GetFloor()
+    {
+        return compteurEtage;
     }
 
     public bool GetIsBoss()
