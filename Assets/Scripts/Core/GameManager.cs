@@ -59,19 +59,14 @@ public class GameManager : MonoBehaviour
     {
         difficulty += scaler;
         
-        Debug.Log("Etage : " + compteurEtage);
         if (compteurEtage % 5 == 0)
         {
             isBoss = true;
-            Debug.Log("Isboss est vrai");
         }
         else
         {
             isBoss = false;
-            Debug.Log("IsBoss est faux");
         }
-        
-        Debug.Log("Difficulty : "+ difficulty);
     }
 
     private void SetMusic()
