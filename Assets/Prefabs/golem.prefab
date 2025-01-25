@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1565448347
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 53f27d33bb695ba4c83b25596e72ca7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -172,13 +172,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e23c47455d5494db025b2218f9497f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   target: {fileID: 4210428039898693379, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
-  maxHealth: 50
+  maxHealth: 40
   moveSpeed: 3
   detectionRange: 3.5
   stoppingDistance: 1
-  damageAmount: 10
-  damageInterval: 1
+  damageAmount: 4
+  damageInterval: 2
   rotateTowardsPlayer: 1
   rotationSpeed: 5
 --- !u!95 &8262770518750595578

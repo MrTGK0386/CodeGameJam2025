@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3597958700630350857}
-  bulletDamage: 1
+  bulletDamage: 5
   bulletLifetime: 5
 --- !u!50 &3597958700630350857
 Rigidbody2D:
