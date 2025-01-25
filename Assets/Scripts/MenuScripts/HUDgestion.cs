@@ -8,7 +8,7 @@ public class HUDManager : MonoBehaviour
     public Slider healthBarSlider;         // La barre de vie sous forme de Slider UI
     public Image healthBarFill;            // L'image de remplissage de la barre de vie
     public TextMeshProUGUI healthText;     // Le texte affichant les PV (optionnel)
-    
+
     [Header("Health Bar Colors")]
     public Color fullHealthColor = Color.green;     // Couleur quand la vie est pleine
     public Color lowHealthColor = Color.red;        // Couleur quand la vie est basse
@@ -16,12 +16,14 @@ public class HUDManager : MonoBehaviour
 
     // Référence au PlayerStats
     private PlayerStats playerStats;
+    public GameObject pauseMenu;
+    public static bool isPaused;
 
     void Start()
     {
         // Cherche le composant PlayerStats dans la scène
         playerStats = FindObjectOfType<PlayerStats>();
-        
+
         if (playerStats == null)
         {
             Debug.LogError("Aucun PlayerStats trouvé dans la scène!");
@@ -41,6 +43,36 @@ public class HUDManager : MonoBehaviour
 
         // Initialise l'affichage
         UpdateHealthBar(1f);
+        pauseMenu.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+
+        }
+    }
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
     }
 
     private void UpdateHealthBar(float healthPercentage)
@@ -78,7 +110,7 @@ public class HUDManager : MonoBehaviour
     {
         // Vous pouvez ajouter ici des effets visuels pour la mort
         Debug.Log("Le joueur est mort - Mise à jour du HUD");
-        
+
         // Par exemple, faire clignoter la barre de vie en rouge
         if (healthBarFill != null)
         {
