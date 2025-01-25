@@ -1632,6 +1632,10 @@ MonoBehaviour:
   lowHealthColor: {r: 0.3490566, g: 0.26931927, b: 0.16300283, a: 1}
   lowHealthThreshold: 0.3
   pauseMenu: {fileID: 6777114575547321951}
+<<<<<<< HEAD
+=======
+  floorText: {fileID: 126377733825410075}
+>>>>>>> origin/merjkifepeur
 --- !u!1 &2650387468739265885
 GameObject:
   m_ObjectHideFlags: 0
