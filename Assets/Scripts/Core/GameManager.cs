@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public RandomMusic musicManager;
     public RandomColors discObject;
-    //public RoomFirstDungeonGenerator dungeonGenerator;
+    public RoomFirstDungeonGenerator dungeonGenerator;
     public float scaler = 1.5f;
     
     private float difficulty = 1.0f;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         SetMusic();
         SetDisc();
         SceneManager.LoadScene("Main");
-        //dungeonGenerator.RegenerateDungeon();
+        dungeonGenerator.RegenerateDungeon();
     }
 
     public void NextStage()
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         if (musicManager != null)
         {
+            Debug.Log("Musique !"); 
             musicManager.PlayRandomSound();
         }
         else

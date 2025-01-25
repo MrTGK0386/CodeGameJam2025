@@ -7,6 +7,12 @@ using UnityEngine;
 
 public class RandomMusic : MonoBehaviour
 {
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+    
     public AudioSource audioSource;
     public AudioClip[] mySounds;
 
@@ -34,7 +40,7 @@ public class RandomMusic : MonoBehaviour
 
     void Start()
     {
-        LoadAudioFromFolder();
+        audioSource.Play();
     }
     
     public void PlayRandomSound()

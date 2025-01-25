@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class RandomColors : MonoBehaviour
 {
-    // Start is called before the first frame update
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     
     public Color[] colors;
     private Color currentColor;

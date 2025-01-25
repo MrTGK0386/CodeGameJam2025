@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Julien.unity
     guid: 263fe60c1431293499e6d2b5cde08ca4
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 2c6f8824e06e7e74daef1353ad784bb0
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 9b29c3197942f92499456f51cb170980
   m_configObjects: {}
