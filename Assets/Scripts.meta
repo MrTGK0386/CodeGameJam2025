@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: a4fca55d396571948a1acb0d1679da8f
+=======
+guid: 20f65e3dfb6c34744a683e3bcef36660
+>>>>>>> MusicController
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

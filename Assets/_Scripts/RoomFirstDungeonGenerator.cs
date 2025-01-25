@@ -47,11 +47,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     protected HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
     private BoundsInt spawnRoom;
 
-    public void RegenerateDungeon()
+    private void Awake()
     {
         RunProceduralGeneration();
     }
-
 
     private void CreateSpawnRoom()
     {
@@ -378,7 +377,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         return floor;
     }
 
-        protected override void RunProceduralGeneration()
+    protected override void RunProceduralGeneration()
     {
         floor.Clear();
         corridors = new HashSet<Vector2Int>();
