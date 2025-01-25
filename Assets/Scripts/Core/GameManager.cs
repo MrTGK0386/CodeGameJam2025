@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
     public GameObject player;
+    public GameObject Bullet;
     public RandomMusic musicManager;
     public RandomColors discObject;
     public float scaler = 1.5f;
+    
+    public Sprite[] discsSprites;
     
     private float difficulty = 1.0f;
     private static int  compteurEtage = 0;
@@ -85,14 +89,9 @@ public class GameManager : MonoBehaviour
 
     private void SetDisc()
     {
-        if (discObject != null)
-        {
-            discObject.GenerateColor();
-        }
-        else
-        {
-            Debug.LogWarning("Disc Object is null");
-        }
+        int val = Random.Range(0, 5);
+            
+        Bullet.GetComponent<SpriteRenderer>().sprite = discsSprites[val];
     }
 
 

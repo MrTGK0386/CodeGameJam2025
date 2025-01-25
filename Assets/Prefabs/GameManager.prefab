@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  Bullet: {fileID: 8448018543548000343, guid: 0ba6324d8e9e75b4e8c745887a7acb14, type: 3}
   musicManager: {fileID: 0}
   discObject: {fileID: 0}
   scaler: 1.5
+  discsSprites:
+  - {fileID: 21300000, guid: 913f3f8b54f245c45a9824280a033f8a, type: 3}
+  - {fileID: 21300000, guid: 7fb922f6f94dd35419fe6c4d94ba1c9c, type: 3}
+  - {fileID: 21300000, guid: 17a5e6014870edb4880bae9139362d97, type: 3}
+  - {fileID: 21300000, guid: 00834b6e49332a64d9c1fd51dbbd6fa5, type: 3}
+  - {fileID: 21300000, guid: 18d7f329932f26342b7a94e98172ba28, type: 3}
+  - {fileID: 21300000, guid: 91ed97800f9de19479441807902cd463, type: 3}
