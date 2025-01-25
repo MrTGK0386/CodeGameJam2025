@@ -7,7 +7,6 @@ public class EnemyController : MonoBehaviour
     public Transform target;
     private Rigidbody2D rb;
     private PlayerStats playerStats;         // Référence aux stats du joueur
-    private GameManager gameManager;         // Ajout de la référence au GameManager        // Référence aux stats du joueur
 
     [Header("Health Settings")]
     public float maxHealth = 50f;
@@ -34,32 +33,7 @@ public class EnemyController : MonoBehaviour
 
         // On ajoute l'initialisation de lastDamageTime
         lastDamageTime = Time.time;
-
-        // On ajoute l'initialisation de lastDamageTime
-        lastDamageTime = Time.time;
-
-        // Récupérer le GameManager et appliquer le multiplicateur de difficulté à toutes les stats
-        gameManager = GameManager.Instance;
-        if (gameManager != null)
-        {
-            float multiplier = gameManager.GetMultiplier();
-            // Ajuster toutes les stats
-            maxHealth *= multiplier;
-            currentHealth = maxHealth;  // Important de mettre à jour la santé actuelle aussi
-            moveSpeed *= multiplier;
-            damageAmount *= multiplier;
-
-            Debug.Log($"Enemy stats adjusted for difficulty (x{multiplier}):");
-            Debug.Log($"Health: {maxHealth}");
-            Debug.Log($"Speed: {moveSpeed}");
-            Debug.Log($"Damage: {damageAmount}");
-        }
-        else
-        {
-            currentHealth = maxHealth; // Initialisation par défaut si pas de GameManager
-            Debug.LogWarning("GameManager not found! Difficulty scaling won't be applied.");
-        }
-
+        currentHealth = maxHealth;
 
         // Si target n'est pas assigné, on essaie de le trouver automatiquement
         if (target == null)
@@ -81,7 +55,7 @@ public class EnemyController : MonoBehaviour
         {
             rb.gravityScale = 0f;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
+        
             // Vérifions que nous avons bien un Collider2D configuré en trigger
             Collider2D col = GetComponent<Collider2D>();
             if (col != null)
@@ -175,10 +149,10 @@ public class EnemyController : MonoBehaviour
             {
                 // On inflige les dégâts
                 playerStats.TakeDamage(damageAmount);
-
+                
                 // On met à jour le moment du dernier dégât
                 lastDamageTime = Time.time;
-
+                
                 Debug.Log($"Dégâts infligés : {damageAmount}");
             }
             else

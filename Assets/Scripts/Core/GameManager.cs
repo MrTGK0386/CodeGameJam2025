@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         SetMusic();
         SetDisc();
         SceneManager.LoadScene("Main");
+        //dungeonGenerator.RegenerateDungeon();
     }
 
     public void NextStage()
