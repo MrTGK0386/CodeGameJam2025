@@ -86,6 +86,7 @@ public class EnemyController : MonoBehaviour
     private void Die()
     {
         // Ajoutez ici votre logique de mort (explosion, etc.)
+        GameManager.Instance.AddFans(5f);
         Destroy(gameObject);
     }
 

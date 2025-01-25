@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     
     private float difficulty = 1.0f;
     private static int  compteurEtage = 0;
+
+    private static float fansScore = 0;
     private bool isBoss = false;
     
     private void Awake()
@@ -107,5 +109,13 @@ public class GameManager : MonoBehaviour
     public bool GetIsBoss()
     {
         return isBoss;
+    }
+    public void AddFans(float amount)
+    {
+        fansScore += amount;
+    }
+    public float GetFansScore()
+    {
+        return fansScore;
     }
 }

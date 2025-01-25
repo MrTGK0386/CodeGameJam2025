@@ -19,6 +19,7 @@ public class HUDManager : MonoBehaviour
     public GameObject pauseMenu;
     public static bool isPaused;
     public TextMeshProUGUI floorText;
+    [SerializeField] private TextMeshProUGUI fansScoreText;
     private GameManager gameManager;
 
     void Start()
@@ -51,6 +52,7 @@ public class HUDManager : MonoBehaviour
 
     void Update()
     {
+        fansScoreText.text = GameManager.Instance.GetFansScore().ToString();
         // Mise à jour du texte de l'étage
         if (floorText != null && gameManager != null)
         {
