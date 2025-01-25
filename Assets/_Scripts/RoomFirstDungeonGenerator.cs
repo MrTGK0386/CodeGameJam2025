@@ -266,8 +266,28 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
             propsContainer.transform.parent = GameObject.Find("Grid").transform;
         }
 
-        Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+        // Obtention du scale de la Grid
+        Vector3 gridScale = GameObject.Find("Grid").transform.localScale;
+
+        // Position en tenant compte de l'échelle
+        Vector3 worldPosition = new Vector3(
+            (position.x + 0.5f) * gridScale.x, 
+            (position.y + 0.5f) * gridScale.y, 
+            0
+        );
+        
+        // Création de l'item au bon endroit
         GameObject item = Instantiate(rule.prefab, worldPosition, Quaternion.identity);
+        
+        // Application de l'échelle à l'item
+        Vector3 originalScale = item.transform.localScale;
+        item.transform.localScale = new Vector3(
+            originalScale.x * gridScale.x,
+            originalScale.y * gridScale.y,
+            originalScale.z
+        );
+        
+        // Parent et enregistrement
         item.transform.parent = propsContainer.transform;
         placedItems.Add(position, item);
     }
