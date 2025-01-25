@@ -32,15 +32,11 @@ public class RandomMusic : MonoBehaviour
     }
 #endif
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-           PlayRandomSound();
-        }
+        LoadAudioFromFolder();
     }
-
+    
     public void PlayRandomSound()
     {
         if (mySounds.Length > 0)
