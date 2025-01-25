@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class ElevatorLevel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (GameManager.Instance != null) // Ajoutez cette vérification
+        {
+            if (other.CompareTag("Player"))
+            {        
+                GameManager.Instance.NextStage();
+                Debug.Log("Le joueur est entré dans la zone");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager est manquant !");
+        }
     }
 }

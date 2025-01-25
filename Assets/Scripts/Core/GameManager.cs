@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public RandomMusic musicManager;
     public RandomColors discObject;
-    public RoomFirstDungeonGenerator dungeonGenerator;
     public float scaler = 1.5f;
     
     private float difficulty = 1.0f;
@@ -37,15 +36,14 @@ public class GameManager : MonoBehaviour
         SetMusic();
         SetDisc();
         SceneManager.LoadScene("Main");
-        dungeonGenerator.RegenerateDungeon();
+        //dungeonGenerator.RegenerateDungeon();
     }
 
     public void NextStage()
     {
         compteurEtage++;
         UpDifficulty();
-        ResetPlayerPosition();
-        //dungeonGenerator.RegenerateDungeon();
+        SceneManager.LoadScene("Main");
     }
 
     public void EndGame()
@@ -94,10 +92,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ResetPlayerPosition()
-    {
-        //replace le joueur dans la salle du spawn
-    }
 
     public float GetMultiplier()
     {
