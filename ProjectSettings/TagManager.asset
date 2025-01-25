@@ -46,6 +46,9 @@ TagManager:
   - name: map
     uniqueID: 1102750579
     locked: 0
+  - name: Sol Lobby
+    uniqueID: 236912523
+    locked: 0
   - name: player
     uniqueID: 1070445575
     locked: 0
