@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public Rigidbody2D rb;
 
+    // ANIMATION
+    public Animator animator;
+
     // MOVES
     private Vector2 moveDirection;
 
@@ -58,11 +61,24 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
+        float speed = Mathf.Abs(moveX) + Mathf.Abs(moveY);
+        animator.SetFloat("Speed", speed);
+
+        // Flip sprite based on movement direction
+        if (moveX != 0)
+        {
+            transform.localScale = new Vector3(
+                moveX > 0 ? Mathf.Abs(transform.localScale.x) : -Mathf.Abs(transform.localScale.x), 
+                transform.localScale.y, 
+                transform.localScale.z
+            );
+        }
+
         moveDirection = new Vector2(moveX, moveY).normalized;
 
         if(Input.GetButtonDown("Jump") && canDash)
         {
-            Debug.Log("here");
+            animator.SetBool("Dash", true);
             StartCoroutine(Dash());
         }
     }
@@ -76,11 +92,13 @@ public class PlayerController : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
+        
         rb.velocity = new Vector2(moveDirection.x * dashSpeed, moveDirection.y * dashSpeed);
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
+        animator.SetBool("Dash", false);
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
-    } 
+    }   
 
 }

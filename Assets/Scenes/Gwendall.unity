@@ -122,11 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &371082079 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5292552263267556426, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
+  m_PrefabInstance: {fileID: 1473235614}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &371082086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4210428039898693379, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
   m_PrefabInstance: {fileID: 1473235614}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &371082087
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371082079}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 787446e39b00dad4684c6a1486bc7ed5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &515624761
 GameObject:
   m_ObjectHideFlags: 0
@@ -12631,6 +12657,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3805911943918974254, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 371082087}
     - target: {fileID: 4210428039898693379, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.23
@@ -12678,7 +12708,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5292552263267556426, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 371082087}
   m_SourcePrefab: {fileID: 100100000, guid: fda149e9b4e1e144f9556c0d3a2c51c1, type: 3}
 --- !u!1 &1588574145
 GameObject:
